@@ -8,15 +8,6 @@
   version = "v1.2.0"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/johnny-debt/hashtag-connector"
-  packages = [
-    "watcher",
-    "wsconnshub"
-  ]
-  revision = "15b5c9cba3c960cfd05183d653b753b914e44816"
-
-[[projects]]
   name = "github.com/johnny-debt/instascrap"
   packages = ["."]
   revision = "41f28a2dac76e56d70ad535688b343f9c7208578"
@@ -25,8 +16,8 @@
 [[projects]]
   name = "github.com/sociafill/gorillas"
   packages = ["."]
-  revision = "7e75bf5d83e8cb95772ab5dd0481f38f15bc8427"
-  version = "v0.1.0"
+  revision = "93abd377086d45d9f99211c1c80e922c62eec496"
+  version = "v0.2.0"
 
 [[projects]]
   name = "github.com/sociafill/sp2pt"
@@ -37,6 +28,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "51ead1bb710ca90525dc88f035b2c71351207c104bdd9d8a25d2a337003fc76b"
+  inputs-digest = "8df2bb7005843623bb3ab4b2b2e976cac601abefe300d3b9558e1c10e7cfd267"
   solver-name = "gps-cdcl"
   solver-version = 1

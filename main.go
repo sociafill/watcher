@@ -18,7 +18,7 @@ import (
 var hub gorillas.Gorillas
 var broker sp2pt.Broker
 var consumer = hashtagConsumer{}
-var maxIds = make(map[string]string)
+var maxIDs = make(map[string]string)
 
 func processCommand(conn *websocket.Conn) bool {
 	// Read raw bytes from the connection
@@ -51,9 +51,9 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-type Message interface{}
+type message interface{}
 
-// Define our message object
+// ClientCommand defines our message object
 type ClientCommand struct {
 	Command string `json:"command"` // "watch" or "unwatch"
 	Hashtag string `json:"hashtag"`
@@ -97,7 +97,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 
 type watchedHashtag struct {
 	slug  string
-	maxId string
+	maxID string
 }
 
 func (hashtag watchedHashtag) Identifier() sp2pt.Identifier {
@@ -113,9 +113,9 @@ func (hashtag watchedHashtag) Poll() []interface{} {
 
 	var items []interface{}
 	for _, v := range medias {
-		maxId, exists := maxIds[hashtag.slug]
-		if !exists || v.ID > maxId {
-			maxIds[hashtag.slug] = v.ID
+		maxID, exists := maxIDs[hashtag.slug]
+		if !exists || v.ID > maxID {
+			maxIDs[hashtag.slug] = v.ID
 			items = append(items, v)
 		}
 	}
@@ -133,13 +133,7 @@ func (consumer hashtagConsumer) Consume(object sp2pt.Observable, item interface{
 	switch item.(type) {
 	case instascrap.Media:
 		fmt.Printf("Media #%s received for source %s\n", item.(instascrap.Media).ID, object.Identifier())
-		// @TODO Implement thisfunctionality in
-		// Send this media to all subscribers
-		// subscribers := wsConnectionsHub.GetSubscribedConnections(gorillas.Topic(object.Identifier()))
-		// for _, subscriber := range subscribers {
-		// 	conn := (*websocket.Conn)(subscriber)
-		// 	conn.WriteJSON(item)
-		// }
+		hub.SendJSON(gorillas.Topic(object.Identifier()), item)
 	default:
 		fmt.Printf("Unknown object received (%T)\n", item)
 	}
