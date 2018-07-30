@@ -1,4 +1,4 @@
-.PHONY: all build test
+.PHONY: all build test gitlab
 
 all: build
 
@@ -7,3 +7,6 @@ build:
 
 test:
 	go test
+
+gitlab:
+	chmod +x .gitlab/init.sh && .gitlab/init.sh

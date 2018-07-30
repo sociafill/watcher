@@ -8,13 +8,13 @@ stages:
 test:
   stage: test
   script:
-  - .gitlab/init.sh
+  - make gitlab
   - make test
 
 build:
   stage: build
   script:
-  - .gitlab/init.sh
+  - make gitlab
   - make build
 
 docker:image:
