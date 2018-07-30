@@ -8,13 +8,15 @@ stages:
 test:
   stage: test
   script:
-  - make gitlab
+  - chmod +x .gitlab/init.sh
+  - .gitlab/init.sh
   - make test
 
 build:
   stage: build
   script:
-  - make gitlab
+  - chmod +x .gitlab/init.sh
+  - .gitlab/init.sh
   - make build
 
 docker:image:
