@@ -1,0 +1,15 @@
+[prune]
+  go-tests = true
+  unused-packages = true
+
+[[constraint]]
+  name = "github.com/johnny-debt/instascrap"
+  version = "0.1.0"
+
+[[constraint]]
+  name = "github.com/sociafill/sp2pt"
+  version = "0.1.0"
+
+[[constraint]]
+  name = "github.com/sociafill/gorillas"
+  version = "0.2.0"
