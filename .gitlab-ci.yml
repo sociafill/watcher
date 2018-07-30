@@ -8,16 +8,24 @@ stages:
 test:
   stage: test
   script:
-  - chmod +x .gitlab/init.sh
-  - .gitlab/init.sh
-  - make test
+  - go get -u github.com/golang/dep/cmd/dep
+  - mkdir -p $GOPATH/src
+  - cd $GOPATH/src
+  - ln -s $CI_PROJECT_DIR
+  - cd $CI_PROJECT_NAME
+  - dep ensure
+  - go test
 
 build:
   stage: build
   script:
-  - chmod +x .gitlab/init.sh
-  - .gitlab/init.sh
-  - make build
+  - go get -u github.com/golang/dep/cmd/dep
+  - mkdir -p $GOPATH/src
+  - cd $GOPATH/src
+  - ln -s $CI_PROJECT_DIR
+  - cd $CI_PROJECT_NAME
+  - dep ensure
+  - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 docker:image:
   stage: docker
@@ -25,14 +33,13 @@ docker:image:
   services:
   - docker:dind
   script:
-  - la -la
   - docker version
   - docker build -t $CI_REGISTRY_IMAGE:latest -f Dockerfile.scratch .
   - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
   - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
-  # Create docker images with tags if tag has been appeared
-  - "[[ -z $CI_BUILD_TAG ]] && exit 0"
-  - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-  - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
+  # Only when git tag appeared
+ - "[[ -z $CI_BUILD_TAG ]] && exit 0"
+ - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
+ - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+ - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
