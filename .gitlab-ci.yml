@@ -25,6 +25,8 @@ docker:image:
   services:
   - docker:dind
   script:
+  - cd $GOPATH/src/$CI_PROJECT_NAME
+  - la -la
   - docker version
   - docker build -t $CI_REGISTRY_IMAGE:latest -f Dockerfile.scratch .
   - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
