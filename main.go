@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -132,9 +131,9 @@ type hashtagConsumer struct {
 func (consumer hashtagConsumer) Consume(object sp2pt.Observable, item interface{}) {
 	switch item.(type) {
 	case instascrap.Media:
-		fmt.Printf("Media #%s received for source %s\n", item.(instascrap.Media).ID, object.Identifier())
+		log.Printf("Media #%s received for source %s\n", item.(instascrap.Media).ID, object.Identifier())
 		hub.SendJSON(gorillas.Topic(object.Identifier()), item)
 	default:
-		fmt.Printf("Unknown object received (%T)\n", item)
+		log.Printf("Unknown object received (%T)\n", item)
 	}
 }
