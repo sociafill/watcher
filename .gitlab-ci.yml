@@ -8,6 +8,8 @@ stages:
 test:
   stage: test
   script:
+  - pwd
+  - ls -la
   - go get -u github.com/golang/dep/cmd/dep
   - mkdir -p $GOPATH/src
   - cd $GOPATH/src
