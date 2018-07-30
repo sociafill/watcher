@@ -28,10 +28,11 @@ build:
   - dep ensure
   - pwd
   - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watcher .
+  - pwd
   - ls -la
   artifacts:
     paths:
-      - /go/src/$CI_PROJECT_NAME/watcher
+      - watcher
 
 # docker:image:
 #   stage: docker
