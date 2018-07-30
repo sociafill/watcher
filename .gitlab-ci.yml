@@ -30,7 +30,7 @@ build:
   - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watcher .
   artifacts:
     paths:
-      $GOPATH/src/$CI_PROJECT_NAME/watcher
+      - $GOPATH/src/$CI_PROJECT_NAME/watcher
 
 # docker:image:
 #   stage: docker
