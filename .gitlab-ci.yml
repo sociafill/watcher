@@ -31,7 +31,7 @@ build:
   - ls -la
   artifacts:
     paths:
-      - $GOPATH/src/$CI_PROJECT_NAME/watcher
+      - /go/src/$CI_PROJECT_NAME/watcher
 
 # docker:image:
 #   stage: docker
