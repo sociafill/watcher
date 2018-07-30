@@ -25,18 +25,22 @@ build:
   - ln -s $CI_PROJECT_DIR
   - cd $CI_PROJECT_NAME
   - dep ensure
-  - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
-
-docker:image:
-  stage: docker
-  image: docker:latest
-  services:
-  - docker:dind
-  script:
   - pwd
-  - ls -la
-  - docker version
-  - docker build -t $CI_REGISTRY_IMAGE:latest -f Dockerfile.scratch .
-  - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-  - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+  - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watcher .
+  artifacts:
+  paths:
+    $GOPATH/src/$CI_PROJECT_NAME/watcher
+
+# docker:image:
+#   stage: docker
+#   image: docker:latest
+#   services:
+#   - docker:dind
+#   script:
+#   - pwd
+#   - ls -la
+#   - docker version
+#   - docker build -t $CI_REGISTRY_IMAGE:latest -f Dockerfile.scratch .
+#   - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+#   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+#   - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
