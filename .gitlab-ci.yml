@@ -9,14 +9,14 @@ test:
   stage: test
   script:
   - chmod +x .gitlab/init.sh
-  - .gitlab/init.sh
+  - .gitlab/init.sh && cd $GOPATH/src/$CI_PROJECT_NAME
   - make test
 
 build:
   stage: build
   script:
   - chmod +x .gitlab/init.sh
-  - .gitlab/init.sh
+  - .gitlab/init.sh && cd $GOPATH/src/$CI_PROJECT_NAME
   - make build
 
 docker:image:
