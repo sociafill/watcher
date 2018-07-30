@@ -9,14 +9,14 @@ test:
   stage: test
   script:
   - chmod +x .gitlab/init.sh
-  - .gitlab/init.sh && cd $GOPATH/src/$CI_PROJECT_NAME
+  - .gitlab/init.sh
   - make test
 
 build:
   stage: build
   script:
   - chmod +x .gitlab/init.sh
-  - .gitlab/init.sh && cd $GOPATH/src/$CI_PROJECT_NAME
+  - .gitlab/init.sh
   - make build
 
 docker:image:
@@ -25,7 +25,6 @@ docker:image:
   services:
   - docker:dind
   script:
-  - cd $GOPATH/src/$CI_PROJECT_NAME
   - la -la
   - docker version
   - docker build -t $CI_REGISTRY_IMAGE:latest -f Dockerfile.scratch .
