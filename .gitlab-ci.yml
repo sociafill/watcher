@@ -3,6 +3,7 @@ image: golang:1.10
 stages:
 - test
 - build
+- docker
 
 test:
   stage: test
