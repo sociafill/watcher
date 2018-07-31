@@ -15,7 +15,7 @@ tools:
   script:
   - go get -u github.com/golang/dep/cmd/dep
   - apt-get update && apt install tree -y
-  - cd $GOPATH && tree
+  - cd $GOPATH && pwd && tree
   artifacts:
     paths:
     - /go/bin/dep
