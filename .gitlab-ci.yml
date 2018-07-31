@@ -14,7 +14,7 @@ tools:
   - pwd
   - ls -la
   - go get -u github.com/golang/dep/cmd/dep
-  - apt install tree -y
+  - apt-get update && apt install tree -y
   - cd $GOPATH && tree
 
 test:
