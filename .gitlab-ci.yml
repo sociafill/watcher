@@ -43,11 +43,11 @@ docker:image:
   services:
   - docker:dind
   script:
-  - pwd
-  - ls -la
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
   - docker version
-  - docker build -t $CI_REGISTRY_IMAGE:latest -f Dockerfile.scratch .
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  - docker build .
+  - docker tag $CI_REGISTRY_IMAGE:latest
+  - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
   - docker images
-  # - docker tag $CI_REGISTRY_IMAGE:latest 
-  # - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+  - docker push $CI_REGISTRY_IMAGE:latest
+  - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
