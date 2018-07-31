@@ -14,13 +14,10 @@ tools:
     GIT_STRATEGY: none
   script:
   - go get -u github.com/golang/dep/cmd/dep
-  - apt-get update && apt install tree -y
-  - cd $GOPATH && pwd && tree
-  - ls -la /go/bin
-  - ls -la /go/bin/dep
+  - cp $GOPATH/bin/dep $CI_PROJECT_DIR/dep
   artifacts:
     paths:
-    - /go/bin/dep
+    - $CI_PROJECT_DIR/dep
 
 # clone:
 #   stage: clone
