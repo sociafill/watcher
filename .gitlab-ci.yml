@@ -45,9 +45,9 @@ docker:image:
   script:
   - pwd
   - ls -la
-  - docker version
-  - docker build -f Dockerfile.scratch .
-  - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
-  - docker tag $CI_REGISTRY_IMAGE:latest
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-  - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+  - docker version
+  - docker build -t $CI_REGISTRY_IMAGE:latest -f Dockerfile.scratch .
+  - docker images
+  # - docker tag $CI_REGISTRY_IMAGE:latest 
+  # - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
