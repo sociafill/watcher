@@ -8,10 +8,13 @@ stages:
 
 tools:
   stage: tools
+  variables:
+    GIT_STRATEGY: none
   script:
   - pwd
   - ls -la
   - go get -u github.com/golang/dep/cmd/dep
+  - apt install tree -y
   - cd $GOPATH && tree
 
 test:
