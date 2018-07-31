@@ -2,6 +2,8 @@ image: golang:1.10
 
 stages:
 - tools
+- clone
+# - vendor
 - test
 - build
 - docker
@@ -11,11 +13,22 @@ tools:
   variables:
     GIT_STRATEGY: none
   script:
-  - pwd
-  - ls -la
   - go get -u github.com/golang/dep/cmd/dep
   - apt-get update && apt install tree -y
   - cd $GOPATH && tree
+  artifacts:
+    paths:
+    - $GOPATH/bin/dep
+
+clone:
+  stage: clone
+  script:
+  - mkdir -p $GOPATH/src
+  - cp -a $CI_PROJECT_DIR/ $GOPATH/src/$CI_PROJECT_NAME/
+  artifacts:
+    paths:
+    - $GOPATH/src/$CI_PROJECT_NAME
+  
 
 test:
   stage: test
