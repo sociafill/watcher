@@ -18,7 +18,7 @@ tools:
   - cd $GOPATH && tree
   artifacts:
     paths:
-    - $GOPATH/bin/dep
+    - /go/bin/dep
 
 clone:
   stage: clone
@@ -27,7 +27,7 @@ clone:
   - cp -a $CI_PROJECT_DIR/ $GOPATH/src/$CI_PROJECT_NAME/
   artifacts:
     paths:
-    - $GOPATH/src/$CI_PROJECT_NAME
+    - /go/src/$CI_PROJECT_NAME
   
 
 test:
