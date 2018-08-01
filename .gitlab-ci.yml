@@ -32,6 +32,8 @@ build:
       - watcher
 
 docker:image:
+  variables:
+    GIT_STRATEGY: none
   stage: docker
   image: docker:latest
   dependencies: 
@@ -44,6 +46,5 @@ docker:image:
   - docker build . -t $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
   - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} $CI_REGISTRY_IMAGE:latest
   - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
-  - docker images
   - docker push $CI_REGISTRY_IMAGE:latest
   - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
