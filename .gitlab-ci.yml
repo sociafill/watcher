@@ -23,8 +23,6 @@ test:
 
 build:
   stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}-vendor
   script:
   - mkdir -p $GOPATH/src
   - cd $GOPATH/src
@@ -35,6 +33,8 @@ build:
     paths:
       - watcher
       - Dockerfile
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-vendor
 
 docker:image:
   variables:
