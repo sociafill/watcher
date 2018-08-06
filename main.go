@@ -104,7 +104,12 @@ func (hashtag watchedHashtag) Identifier() sp2pt.Identifier {
 }
 
 func (hashtag watchedHashtag) Poll() []interface{} {
-	medias, _ := instascrap.GetHashtagMedia(hashtag.slug)
+	medias, error := instascrap.GetHashtagMedia(hashtag.slug)
+	if error != nil {
+		log.Printf("Medias retrieving failed, %v\n", error)
+		return make([]interface{}, 0)
+	}
+
 	// Sort medias be ascending ID
 	sort.SliceStable(medias, func(i, j int) bool {
 		return medias[i].ID < medias[j].ID
